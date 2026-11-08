@@ -6,6 +6,8 @@ DSH's own desktop app always starts a local host and cannot attach to an existin
 
 This is an unofficial community project and is not affiliated with DeepSeek or Docker. It is developed and tested on Windows.
 
+> **Companion kit:** this client is made to be used together with **[dsh-sbx-kit](https://github.com/JakobBonhoeffer/dsh-sbx-kit)**, a Docker Sandboxes kit that builds a sandbox with DSH, starts its web UI on every boot and publishes it on a loopback port. The kit builds and runs the sandbox, this client is the window onto it. Together they give you DSH on your desktop with the agent kept inside a sandbox. The client also works with any other reachable DSH web UI.
+
 ## Features
 
 ### Connect
@@ -115,6 +117,8 @@ grep -o 'token=[A-Za-z0-9_-]*' ~/dsh-web.log | tail -1
 my-url-script {port}
 ```
 
+With the [dsh-sbx-kit](https://github.com/JakobBonhoeffer/dsh-sbx-kit) sandbox, set the login command to `dsh-url {port}`. The kit installs that helper, and it prints the web UI address with the current token.
+
 The app uses only the token from the output. The address it opens is always built from the published port (`http://127.0.0.1:<port>/?token=…`), and the token is never stored or logged. With an empty command (the default) the Login button is not shown and you paste the URL with token by hand.
 
 ## Settings
@@ -138,6 +142,12 @@ If nothing was saved yet, `http://127.0.0.1:3080/` (the default address of `dsh 
 - The remote view has no preload script, runs with `sandbox` and `contextIsolation`, and cannot reach the app's IPC API.
 - Permission requests of the remote page (camera, microphone, notifications, and so on) are not granted.
 - Paths on your computer are only ever chosen in the system's own file dialogs, never by a page. Things that cannot be undone (deleting files, deleting templates) ask first.
+
+## Related projects
+
+- [dsh-sbx-kit](https://github.com/JakobBonhoeffer/dsh-sbx-kit): Docker Sandboxes kit that runs the DSH web UI in a microVM. Use it with this client.
+- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
+- [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/)
 
 ## License
 
