@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>dsh-sbx-client icon: a whale inside a container</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f6bff" />
+      <stop offset="1" stop-color="#0d2c7a" />
+    </linearGradient>
+  </defs>
+
+  <!-- App tile -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bg)" />
+
+  <!-- Container (isometric box outline) -->
+  <polygon
+    points="256,84 408,172 408,348 256,436 104,348 104,172"
+    fill="rgba(255,255,255,0.10)"
+    stroke="#d6e6ff"
+    stroke-width="14"
+    stroke-linejoin="round"
+  />
+
+  <!-- Water spout -->
+  <path
+    d="M236 196 C236 172 224 160 208 152 M236 196 C236 172 248 160 264 152"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="9"
+    stroke-linecap="round"
+  />
+
+  <!-- Whale -->
+  <path
+    fill="#ffffff"
+    d="M128 292
+       C128 244 176 214 236 214
+       C294 214 330 240 346 266
+       C354 250 368 240 384 240
+       C382 254 376 266 366 274
+       C378 272 390 276 394 286
+       C380 296 358 298 342 292
+       C322 322 282 340 230 340
+       C170 340 128 322 128 292 Z"
+  />
+  <circle cx="170" cy="274" r="7" fill="#0d2c7a" />
+</svg>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:* http://localhost:*"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="./window.css" />
+  </head>
+  <body>
+    <div id="backdrop" class="backdrop">
+      <section class="dialog wide" role="dialog" aria-modal="true" aria-labelledby="title">
+        <header class="dialog-header">
+          <h1 id="title">Settings</h1>
+          <button id="close" class="button icon" type="button" aria-label="Close">✕</button>
+        </header>
+
+        <div class="dialog-main">
+          <nav class="nav" role="tablist" aria-label="Settings sections">
+            <button class="nav-item" role="tab" type="button" data-section="sandboxes" aria-selected="true">
+              Docker Sandboxes
+            </button>
+            <button class="nav-item" role="tab" type="button" data-section="logging" aria-selected="false">
+              Logging
+            </button>
+            <button class="nav-item" role="tab" type="button" data-section="about" aria-selected="false">
+              About
+            </button>
+          </nav>
+
+          <div class="section-area">
+            <section class="section" data-section="sandboxes" role="tabpanel">
+              <h2>Docker Sandboxes</h2>
+              <p id="notice" class="notice" hidden></p>
+
+              <form id="form" class="form" autocomplete="off">
+                <div class="field">
+                  <label for="sbx-path">sbx executable</label>
+                  <input id="sbx-path" class="input" type="text" spellcheck="false" />
+                  <span class="hint">
+                    Name or full path of the Docker Sandboxes CLI. Leave it as <code>sbx</code> if it is on your
+                    PATH.
+                  </span>
+                </div>
+
+                <div class="field">
+                  <label for="token-command">Login command (optional)</label>
+                  <input id="token-command" class="input" type="text" spellcheck="false" />
+                  <span class="hint">
+                    A shell command that is run <em>inside</em> the sandbox to get the launch token of the web UI.
+                    It must print <code>token=…</code> or a URL containing it; <code>{port}</code> is replaced by
+                    the port published on this computer. With a command set, the Sandboxes dialog offers
+                    “Login” next to “Connect”. Example, when the web UI logs its URL to a file:
+                    <code>grep -o 'token=[A-Za-z0-9_-]*' ~/dsh-web.log | tail -1</code>
+                  </span>
+                </div>
+
+                <div class="actions">
+                  <button id="save" class="button primary" type="submit">Save</button>
+                  <button id="test" class="button" type="button">Test</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="section" data-section="logging" role="tabpanel" hidden>
+              <h2>Logging</h2>
+              <p id="log-notice" class="notice" hidden></p>
+
+              <div class="form">
+                <div class="field">
+                  <label for="log-level">Log level</label>
+                  <select id="log-level" class="input">
+                    <option value="error">Error: only failures</option>
+                    <option value="warn">Warning: failures and problems</option>
+                    <option value="info">Info: also what the app does (default)</option>
+                    <option value="debug">Debug: also every sbx call, very detailed</option>
+                  </select>
+                  <span class="hint">How much the app writes to its own log file. Changes apply at once.</span>
+                </div>
+
+                <div class="field">
+                  <label class="check">
+                    <input id="mask-tokens" type="checkbox" />
+                    Mask tokens in the log viewer
+                  </label>
+                  <span class="hint">
+                    Replaces <code>token=…</code> in sandbox logs shown by the log viewer. Anyone who can use the
+                    sandbox can read the files directly, so this only guards against shoulder surfing and
+                    accidental screenshots. The app's own log never contains tokens.
+                  </span>
+                </div>
+
+                <div class="field">
+                  <label>Log folder</label>
+                  <code id="log-dir" class="path">…</code>
+                  <span id="log-dir-note" class="hint" hidden></span>
+                  <div class="actions">
+                    <button id="open-log-folder" class="button" type="button">Open log folder</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section about" data-section="about" role="tabpanel" hidden>
+              <h2>About</h2>
+              <dl>
+                <dt>Application</dt>
+                <dd id="about-name">…</dd>
+                <dt>Version</dt>
+                <dd id="about-version">…</dd>
+                <dt>License</dt>
+                <dd>MIT</dd>
+              </dl>
+              <p class="hint">
+                Shows the web UI of a DeepSeek Harness host running elsewhere, for example in a Docker sandbox.
+                This is an unofficial community project and is not affiliated with DeepSeek or Docker.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="./settings.ts"></script>
+  </body>
+</html>

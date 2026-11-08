@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:* http://localhost:*"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Files</title>
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="./window.css" />
+    <link rel="stylesheet" href="./file-browser.css" />
+  </head>
+  <body>
+    <div id="backdrop" class="backdrop">
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="title">
+        <header class="dialog-header">
+          <div class="header-actions">
+            <button id="back" class="button" type="button">← Sandboxes</button>
+            <h1 id="title">Files</h1>
+            <span id="sandbox-name" class="card-meta"></span>
+          </div>
+          <button id="close" class="button icon" type="button" aria-label="Close">✕</button>
+        </header>
+
+        <div class="explorer-toolbar">
+          <button id="copy-to-host" class="button primary" type="button" disabled>Copy to host…</button>
+          <button id="upload-here" class="button" type="button" title="Upload files from this computer into the open folder">Upload here…</button>
+          <button id="new-folder" class="button" type="button">New folder</button>
+          <button id="rename" class="button" type="button" disabled title="Rename (F2)">Rename</button>
+          <button id="delete" class="button danger" type="button" disabled title="Delete (Del)">Delete</button>
+          <span id="selection-info" class="hint"></span>
+        </div>
+
+        <p id="notice" class="notice explorer-notice" hidden></p>
+        <div id="browser" class="explorer-browser"></div>
+      </section>
+    </div>
+
+    <script type="module" src="./explorer.ts"></script>
+  </body>
+</html>

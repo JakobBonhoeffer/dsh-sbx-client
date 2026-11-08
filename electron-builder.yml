@@ -1,0 +1,33 @@
+# electron-builder configuration. Build with: pnpm dist
+appId: io.github.jakobbonhoeffer.dsh-sbx-client
+productName: DSH sbx client
+copyright: Copyright (c) 2026 Jakob Bonhoeffer
+
+directories:
+  buildResources: build
+  output: release
+
+# Only the bundled app is shipped; sources, docs and tooling stay out.
+files:
+  - out/**
+  - package.json
+
+# Writes install-manifest.txt for the safe uninstaller (see build/installer.nsh).
+afterPack: scripts/after-pack.cjs
+
+win:
+  target:
+    - target: nsis
+      arch: x64
+    - target: portable
+      arch: x64
+  icon: build/icon.png
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  artifactName: ${name}-${version}-setup.${ext}
+
+portable:
+  artifactName: ${name}-${version}-portable.${ext}

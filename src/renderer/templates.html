@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:* http://localhost:*"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Templates</title>
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="./window.css" />
+  </head>
+  <body>
+    <div id="backdrop" class="backdrop">
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="title">
+        <header class="dialog-header">
+          <div class="header-actions">
+            <button id="back" class="button" type="button">← Sandboxes</button>
+            <h1 id="title">Templates</h1>
+            <span id="sandbox-name" class="card-meta"></span>
+          </div>
+          <button id="close" class="button icon" type="button" aria-label="Close">✕</button>
+        </header>
+
+        <div class="dialog-body">
+          <p id="notice" class="notice" hidden></p>
+
+          <article class="card">
+            <h2 class="card-heading">Save this sandbox as a template</h2>
+            <p id="running-hint" class="hint" hidden>
+              This sandbox is running. You will be asked to confirm: a snapshot may interrupt or stop it.
+            </p>
+            <div class="field">
+              <label for="tag">Name of the template</label>
+              <input id="tag" class="input" type="text" spellcheck="false" placeholder="my-template:v1" />
+              <span class="hint">
+                A new sandbox can be created from it with <code>sbx run --pull never -t NAME AGENT</code>.
+                Lowercase letters, digits and <code>. _ -</code>, optionally followed by <code>:tag</code>.
+              </span>
+            </div>
+            <label class="check"><input id="export" type="checkbox" /> Also export it as a tar file (to use on another computer)</label>
+            <div class="actions section-actions">
+              <button id="save" class="button primary" type="button">Save template</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head">
+              <h2 class="card-heading">Templates on this computer</h2>
+              <span class="spacer"></span>
+              <button id="load" class="button" type="button">Load from tar file…</button>
+              <button id="refresh" class="button" type="button">Refresh</button>
+            </div>
+            <div id="list" class="card-rows"></div>
+            <p class="hint footnote">The templates are shared by all sandboxes of this computer.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="./templates.ts"></script>
+  </body>
+</html>

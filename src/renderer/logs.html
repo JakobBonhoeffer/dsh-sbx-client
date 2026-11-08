@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' ws://localhost:* http://localhost:*"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logs</title>
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="./window.css" />
+    <link rel="stylesheet" href="./file-browser.css" />
+    <link rel="stylesheet" href="./logs.css" />
+  </head>
+  <body>
+    <div id="backdrop" class="backdrop">
+      <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="title">
+        <header class="dialog-header">
+          <div class="header-actions">
+            <button id="back" class="button" type="button">← Sandboxes</button>
+            <h1 id="title">Logs</h1>
+            <span id="sandbox-name" class="card-meta"></span>
+          </div>
+          <button id="close" class="button icon" type="button" aria-label="Close">✕</button>
+        </header>
+
+        <div class="logs-bar">
+          <input id="path" class="input" type="text" spellcheck="false" placeholder="Path of a log file in the sandbox" />
+          <button id="browse" class="button" type="button">Browse…</button>
+          <button id="open" class="button primary" type="button">Open</button>
+          <select id="found" class="input" aria-label="Log files found in the sandbox" disabled>
+            <option value="">Find logs…</option>
+          </select>
+        </div>
+
+        <div class="logs-bar">
+          <label class="check"><input id="follow" type="checkbox" checked /> Follow</label>
+          <label class="check"><input id="wrap" type="checkbox" /> Wrap</label>
+          <label class="check" for="lines">Lines</label>
+          <select id="lines" class="input">
+            <option value="200">200</option>
+            <option value="500" selected>500</option>
+            <option value="1000">1000</option>
+            <option value="5000">5000</option>
+          </select>
+          <input id="filter" class="input" type="search" spellcheck="false" placeholder="Filter lines" />
+          <button id="copy" class="button" type="button">Copy</button>
+          <button id="save" class="button" type="button">Save to host…</button>
+        </div>
+
+        <p id="notice" class="notice explorer-notice" hidden></p>
+        <pre id="view" class="log-view" tabindex="0" aria-label="Log text"></pre>
+        <footer class="logs-status"><span id="status" class="hint"></span></footer>
+
+        <!-- "Browse…" picker: the file browser as a layer over this dialog -->
+        <div id="picker" class="picker" role="dialog" aria-modal="true" aria-labelledby="picker-title" hidden>
+          <header class="picker-head">
+            <strong id="picker-title"></strong>
+          </header>
+          <p id="picker-notice" class="notice explorer-notice" hidden></p>
+          <div id="picker-browser" class="explorer-browser"></div>
+          <footer class="picker-actions">
+            <span id="picker-choice" class="hint"></span>
+            <button id="picker-cancel" class="button" type="button">Cancel</button>
+            <button id="picker-select" class="button primary" type="button">Select</button>
+          </footer>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="./logs.ts"></script>
+  </body>
+</html>

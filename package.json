@@ -1,0 +1,43 @@
+{
+  "name": "dsh-sbx-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Electron app that shows the web UI of a DeepSeek Harness host running in a Docker sandbox, with tools for local sandboxes.",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "docker-sandbox",
+    "electron"
+  ],
+  "license": "MIT",
+  "author": "Jakob Bonhoeffer",
+  "homepage": "https://github.com/JakobBonhoeffer/DSH-SbxRemoteClient",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakobBonhoeffer/DSH-SbxRemoteClient.git"
+  },
+  "main": "./out/main/index.js",
+  "packageManager": "pnpm@11.28.5",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "icons": "node scripts/build-icons.mjs",
+    "dist": "pnpm build && electron-builder --win",
+    "dist:dir": "pnpm build && electron-builder --win --dir",
+    "test": "node scripts/run-tests.mjs",
+    "typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^6.0.0",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3",
+    "vite": "^6.4.5"
+  }
+}

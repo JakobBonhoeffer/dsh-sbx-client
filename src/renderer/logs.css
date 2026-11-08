@@ -1,0 +1,65 @@
+/* Logs dialog: two control bars, the text view and a status line. */
+
+.logs-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logs-bar .input {
+  min-width: 0;
+}
+
+/* The first bar: the path takes the space, the list of found logs keeps a fixed width. */
+.logs-bar #path,
+.logs-bar #filter {
+  flex: 1;
+}
+
+.logs-bar #found {
+  flex: none;
+  width: 190px;
+}
+
+.log-view {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 8px 12px;
+  overflow: auto;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.45;
+  white-space: pre;
+  tab-size: 4;
+}
+
+.log-view.wrap {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.log-view:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.logs-status {
+  display: flex;
+  flex: none;
+  padding: 6px 12px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-toolbar);
+}
+
+.logs-status .hint {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

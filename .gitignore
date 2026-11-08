@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+out/
+dist/
+release/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Local app state (Electron user data if started with a project-local path)
+userData/
+
+# Editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local assistant files (working notes, settings)
+.claude/
+
+# Local test tooling (scripts, compiled helpers, screenshots); antivirus-exempt folder, never committed
+.test-tools/
+
+# The app's own log files when it runs from the source tree
+logs/

@@ -1,0 +1,410 @@
+/* File browser (src/renderer/file-browser.ts) and the Files dialog that hosts it. */
+
+/* --- Files dialog layout ---------------------------------------------------------------- */
+
+.explorer-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.explorer-notice {
+  flex: none;
+  margin: 8px 12px 0;
+}
+
+.explorer-browser {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* --- "Browse…" picker layer in the Copy files dialog ------------------------------------ */
+
+.field-row {
+  display: flex;
+  gap: 8px;
+}
+
+.field-row .input {
+  flex: 1;
+}
+
+.picker {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border-radius: 12px;
+}
+
+.picker[hidden] {
+  display: none;
+}
+
+.picker-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: none;
+  padding: 12px 16px 4px;
+}
+
+/* The picker is narrower than the Files dialog: a slimmer tree and tighter columns leave room for names. */
+.picker .fb-side {
+  width: 200px;
+}
+
+.picker .fb-head,
+.picker .fb-row {
+  grid-template-columns: minmax(0, 1fr) 64px 116px;
+  gap: 8px;
+}
+
+.picker-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: none;
+  padding: 10px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.picker-actions .hint {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Browser ---------------------------------------------------------------------------- */
+
+.fb {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 8px 12px;
+}
+
+.fb-address {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 2px;
+  height: 32px;
+  padding: 0 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  cursor: text;
+}
+
+.fb-address-input {
+  flex: 1;
+  height: 28px;
+  border: 0;
+  background: transparent;
+}
+
+.fb-crumb {
+  max-width: 220px;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fb-crumb:hover {
+  background: var(--bg-card);
+}
+
+.fb-sep {
+  color: var(--fg-muted);
+  user-select: none;
+}
+
+.fb-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  border-top: 1px solid var(--border);
+}
+
+.fb-side {
+  flex: none;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 6px;
+  border-right: 1px solid var(--border);
+  background: var(--bg-toolbar);
+}
+
+.fb-quick {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.fb-quick-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.fb-quick-item:hover {
+  background: var(--bg-card);
+}
+
+.fb-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fb-children {
+  padding-left: 14px;
+}
+
+.fb-children[hidden] {
+  display: none;
+}
+
+.fb-node-row {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.fb-node-row.current {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.fb-node-row.current .fb-node-label {
+  color: var(--accent-fg);
+}
+
+.fb-toggle {
+  flex: none;
+  width: 20px;
+  height: 22px;
+  border: 0;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.fb-toggle.leaf {
+  visibility: hidden;
+}
+
+.fb-node-label {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fb-node-row:not(.current):hover {
+  background: var(--bg-card);
+}
+
+.fb-content {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-head,
+.fb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px 150px;
+  gap: 12px;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.fb-head {
+  flex: none;
+  height: 28px;
+  color: var(--fg-muted);
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+}
+
+.fb-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  outline: none;
+}
+
+.fb-list.loading {
+  opacity: 0.5;
+}
+
+.fb-row {
+  height: 28px;
+  cursor: default;
+  user-select: none;
+}
+
+.fb-row:hover {
+  background: var(--bg-card);
+}
+
+.fb-row.selected {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+/* In-place name field (rename, new folder) */
+.fb-rename {
+  flex: 1;
+  min-width: 0;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 4px;
+}
+
+.fb-row.new {
+  background: var(--bg-card);
+}
+
+.fb-row.disabled {
+  opacity: 0.45;
+}
+
+.fb-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fb-name span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fb-icon {
+  flex: none;
+}
+
+.fb-num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.fb-date {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fb-empty {
+  padding: 24px;
+  color: var(--fg-muted);
+  text-align: center;
+}
+
+.fb-status {
+  flex: none;
+  padding: 6px 12px;
+  border-top: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+/* --- In-page context menu --------------------------------------------------------------- */
+
+.context-menu {
+  position: fixed;
+  z-index: 10;
+  min-width: 180px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.context-item {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.context-item:hover:not(:disabled),
+.context-item:focus-visible {
+  background: var(--accent);
+  color: var(--accent-fg);
+  outline: none;
+}
+
+.context-item:disabled {
+  opacity: 0.45;
+  cursor: default;
+}

@@ -1,0 +1,334 @@
+/*
+ * In-app dialogs (Sandboxes, Settings). The main process sizes and centers the dialog view
+ * (see src/main/dialogs.ts) and rounds its corners, so the page simply fills the view.
+ */
+
+html,
+body {
+  overflow: hidden;
+}
+
+.backdrop {
+  height: 100%;
+}
+
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex: none;
+  padding: 10px 12px 10px 16px;
+  background: var(--bg-toolbar);
+  border-bottom: 1px solid var(--border);
+}
+
+.dialog-header h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.button.icon {
+  width: 32px;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.dialog-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+/* Settings: navigation on the left, section content on the right */
+
+.dialog-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: none;
+  width: 188px;
+  padding: 10px;
+  background: var(--bg-toolbar);
+  border-right: 1px solid var(--border);
+}
+
+.nav-item {
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: var(--bg-card);
+}
+
+.nav-item[aria-selected='true'] {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.nav-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.section-area {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+.section {
+  padding: 16px 20px;
+}
+
+.section[hidden] {
+  display: none;
+}
+
+.section h2 {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Shared pieces */
+
+.notice {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--fg-muted);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.notice[hidden] {
+  display: none;
+}
+
+.notice.error {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.notice.ok {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.empty {
+  color: var(--fg-muted);
+}
+
+.card {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.card-heading {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.section-actions {
+  margin-top: 12px;
+}
+
+.footnote {
+  font-size: 13px;
+}
+
+.button.danger {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.card-meta {
+  color: var(--fg-muted);
+}
+
+.badge {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.badge.running {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.card-rows {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.subheading {
+  margin: 4px 0 0;
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* A shared folder: host path, where it appears in the sandbox, read-only badge. */
+.mount-paths {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.row code {
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 13px;
+}
+
+.hint {
+  margin: 0;
+  color: var(--fg-muted);
+  line-height: 1.5;
+}
+
+/* Form layout */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.field .hint {
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+select.input {
+  padding-right: 6px;
+}
+
+.path {
+  display: block;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.about dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 0 0 14px;
+}
+
+.about dt {
+  color: var(--fg-muted);
+}
+
+.about dd {
+  margin: 0;
+}
