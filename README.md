@@ -37,6 +37,12 @@ These need the [`sbx` CLI](https://docs.docker.com/ai/sandboxes/). Everything is
 - The window has no native title bar. The menus **Application** (Sandboxes, Settings, Application log, Exit) and **View** (reload, zoom, full screen, developer tools) sit in the draggable top bar next to the Windows window buttons. Reload is F5.
 - Dialogs open inside the main window, centered over the page, so they follow the window to any monitor and add nothing to the taskbar. Close them with the X button or Escape.
 
+## Download
+
+Windows builds are attached to each release on the [Releases page](https://github.com/JakobBonhoeffer/dsh-sbx-client/releases): an installer (`…-setup.exe`) and a portable single file (`…-portable.exe`), each with a SHA-256 checksum in `SHA256SUMS.txt`.
+
+The builds are **not code-signed** yet, so Windows SmartScreen may warn on first start ("More info", then "Run anyway"). If you prefer not to trust a binary, [build it from source](#development). Verify a download with `certutil -hashfile <file> SHA256` and compare it with `SHA256SUMS.txt`.
+
 ## Requirements
 
 - Node.js 22 or newer

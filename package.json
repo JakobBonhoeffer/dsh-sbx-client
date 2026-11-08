@@ -11,10 +11,10 @@
   ],
   "license": "MIT",
   "author": "Jakob Bonhoeffer",
-  "homepage": "https://github.com/JakobBonhoeffer/DSH-SbxRemoteClient",
+  "homepage": "https://github.com/JakobBonhoeffer/dsh-sbx-client",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JakobBonhoeffer/DSH-SbxRemoteClient.git"
+    "url": "git+https://github.com/JakobBonhoeffer/dsh-sbx-client.git"
   },
   "main": "./out/main/index.js",
   "packageManager": "pnpm@11.28.5",
