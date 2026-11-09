@@ -8,6 +8,18 @@ This is an unofficial community project and is not affiliated with DeepSeek or D
 
 > **Companion kit:** this client is made to be used together with **[dsh-sbx-kit](https://github.com/JakobBonhoeffer/dsh-sbx-kit)**, a Docker Sandboxes kit that builds a sandbox with DSH, starts its web UI on every boot and publishes it on a loopback port. The kit builds and runs the sandbox, this client is the window onto it. Together they give you DSH on your desktop with the agent kept inside a sandbox. The client also works with any other reachable DSH web UI.
 
+## Screenshots
+
+| Connected to a DSH web UI | Not connected |
+| --- | --- |
+| ![The DSH web UI inside the client window](.screenshots/connected.png) | ![The client before connecting](.screenshots/not_connected.png) |
+
+The Sandboxes dialog lists your local sandboxes with status, published ports and shared folders, and connects with one click:
+
+![The Sandboxes dialog](.screenshots/sandboxes.png)
+
+![The Settings dialog with the sbx executable and the login command](.screenshots/settings.png)
+
 ## Features
 
 ### Connect
